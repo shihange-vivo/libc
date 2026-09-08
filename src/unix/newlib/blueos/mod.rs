@@ -3,8 +3,14 @@ pub type clock_t = ::c_long;
 
 pub type c_char = i8;
 pub type wchar_t = u32;
+#[cfg(target_pointer_width = "32")]
 pub type c_long = i32;
+#[cfg(target_pointer_width = "64")]
+pub type c_long = i64;
+#[cfg(target_pointer_width = "32")]
 pub type c_ulong = u32;
+#[cfg(target_pointer_width = "64")]
+pub type c_ulong = u64;
 
 pub type sigset_t = ::c_ulong;
 pub type timer_t = ::c_int;
@@ -556,7 +562,10 @@ const _: [(); 0x4600] = [(); FBIOGET_VSCREENINFO as usize];
 const _: [(); 0x4601] = [(); FBIOPUT_VSCREENINFO as usize];
 const _: [(); 0x4602] = [(); FBIOGET_FSCREENINFO as usize];
 const _: [(); 12] = [(); ::mem::size_of::<::fb_bitfield>()];
+#[cfg(target_pointer_width = "32")]
 const _: [(); 80] = [(); ::mem::size_of::<::fb_fix_screeninfo>()];
+#[cfg(target_pointer_width = "64")]
+const _: [(); 96] = [(); ::mem::size_of::<::fb_fix_screeninfo>()];
 const _: [(); 160] = [(); ::mem::size_of::<::fb_var_screeninfo>()];
 
 extern "C" {
